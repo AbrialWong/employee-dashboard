@@ -63,10 +63,11 @@ const data = [
 export const App = () => {
   return(
     <>
-      <Layout style={{height:"100vh"}}>
+    <div className="root">
+      <div className="slider">
+        <Layout>
         {/* left hand side sider */}
         <Sider
-          style={{width:"60vh"}}
           breakpoint="lg"
           collapsedWidth="0"
           onBreakpoint={(broken) => {
@@ -76,68 +77,86 @@ export const App = () => {
             console.log(collapsed, type);
           }}
         >
-          {/* Image & text */}
-          <div>
-            {/* Image */}
-            <Avatar
-              size={{
-                xs: 24,
-                sm: 32,
-                md: 40,
-                lg: 64,
-                xl: 80,
-                xxl: 100,
-              }}
-              icon={<AntDesignOutlined />}
-            />
-            {/* Text */}
-            <Title level={3} className="site-layout-sub-header-background">long user name</Title>
-          </div>
-
-          {/* Navigation links */}
-          <div>
-            <Menu
-              theme="dark"
-              mode="inline"
-              defaultSelectedKeys={['4']}
-              items={[UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-                (icon, index) => ({
-                  key: String(index + 1),
-                  icon: React.createElement(icon),
-                  label: `nav ${index + 1}`,
-                }),
-              )}
-            />
-          </div>
+        {/* Image & text */}
+        <div className="sliderImg">
+          {/* Image */}
+          <Avatar
+            size={{
+              xs: 24,
+              sm: 32,
+              md: 40,
+              lg: 100,
+              xl: 140,
+              xxl: 100,
+            }}
+            icon={<AntDesignOutlined />}
+          />
+          {/* Text */}
+          <Title level={4}>long user name</Title>
+        </div>
+        {/* Navigation links */}
+        <div className="sliderNav">
+          <Menu
+            mode="inline"
+            defaultSelectedKeys={['4']}
+            items={[UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
+              (icon, index) => ({
+                key: String(index + 1),
+                icon: React.createElement(icon),
+                label: `Function ${index + 1}`,
+              }),
+              
+            )}
+          />
+        </div>
         </Sider>
-        {/* content */}
+        </Layout>
+      </div>
+      {/* content */}
+      <div className="content">
         <Layout>
           {/* user key in min/max amount */}
           <div>
             {/* min amount */}
             <InputNumber
-              addonBefore={<UserOutlined />}
-              prefix="$"
+              addonBefore={<><UserOutlined /></>}
+              prefix={
+                <>
+                  <div style={{flex:1}}>
+                    <div>Minimum salary</div>
+                    <div>Enter Amount</div>
+                  </div>
+                  <div style={{paddingLeft:"10px"}}>$</div>
+                </>
+              }
               style={{
-                width: '30%',
+                width: '45%',
               }}
             />
             - 
             {/* max amount */}
             <InputNumber
-              prefix="$"
+              prefix={
+                <>
+                  <div style={{flex:1}}>
+                    <div>Minimum salary</div>
+                    <div>Enter Amount</div>
+                  </div>
+                  <div style={{paddingLeft:"10px"}}>$</div>
+                </>
+              }
               style={{
-                width: '30%',
+                width: '50%',
               }}
             />
           </div>
           {/* Dashboard */}
-<div>
-  {/* header */}
-  <Title level={3} className="site-layout-sub-header-background">Employee</Title>
-  {/* Datatable */}
-  <Table columns={columns} dataSource={data} />
-</div>
+      <div>
+      {/* header */}
+      <Title level={3} className="site-layout-sub-header-background">Employee</Title>
+      {/* Datatable */}
+      <Table columns={columns} dataSource={data} />
+      </div>
 
           {/* <Header
             className="site-layout-sub-header-background"
@@ -168,7 +187,8 @@ export const App = () => {
             Ant Design ©2018 Created by Ant UED
           </Footer> */}
         </Layout>
-      </Layout>
+      </div>
+</div>
     </>
   )
 }
