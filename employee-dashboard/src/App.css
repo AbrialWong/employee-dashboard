@@ -45,10 +45,18 @@
     flex: 1 1;
     padding-left: 50px;
     padding-right: 50px;
-    padding-top: 25px;
+    padding-top: 100px;
 }
-
-
+.contentDiv {
+    display: flex;
+    justify-content: space-between;
+}
+.contentTitle {
+    padding-top: 30px;
+}
+.ant-layout{
+    background:white;
+}
 #components-layout-demo-responsive {
     height: 32px;
     margin: 16px;

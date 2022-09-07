@@ -116,15 +116,15 @@ export const App = () => {
       <div className="content">
         <Layout>
           {/* user key in min/max amount */}
-          <div>
+          <div className="contentDiv">
             {/* min amount */}
             <InputNumber
               addonBefore={<><UserOutlined /></>}
               prefix={
                 <>
                   <div style={{flex:1}}>
-                    <div>Minimum salary</div>
-                    <div>Enter Amount</div>
+                    <div style={{fontWeight:"bolder"}}>Minimum salary</div>
+                    <div style={{fontSize:"smaller"}}>Enter Amount</div>
                   </div>
                   <div style={{paddingLeft:"10px"}}>$</div>
                 </>
@@ -139,8 +139,8 @@ export const App = () => {
               prefix={
                 <>
                   <div style={{flex:1}}>
-                    <div>Minimum salary</div>
-                    <div>Enter Amount</div>
+                    <div style={{fontWeight:"bolder"}}>Maximum salary</div>
+                    <div style={{fontSize:"smaller"}}>Enter Amount</div>
                   </div>
                   <div style={{paddingLeft:"10px"}}>$</div>
                 </>
@@ -153,7 +153,7 @@ export const App = () => {
           {/* Dashboard */}
       <div>
       {/* header */}
-      <Title level={3} className="site-layout-sub-header-background">Employee</Title>
+      <Title level={3} className="contentTitle">Employee</Title>
       {/* Datatable */}
       <Table columns={columns} dataSource={data} />
       </div>
