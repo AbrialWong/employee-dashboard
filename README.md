@@ -27,7 +27,7 @@ This is the take home assignment for NPHC. This project will serve as a responsi
 
  <b>Technology used</b>
  
-React, React-Redux, Redux Toolkit
+React, React-Redux, Redux Toolkit, Ant Design, LESS
 
  > User Story 3: CRUD feature
  

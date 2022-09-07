@@ -1,0 +1,33 @@
+@import '~antd/dist/antd.css';
+
+/* for mobile view */
+@media only screen and (max-width: 768px) {
+}
+
+/* for tablet view */
+@media only screen and(min-width: 768px) and (max-width: 1023px){
+}
+
+/* for desktop view */
+#components-layout-demo-responsive {
+    height: 32px;
+    margin: 16px;
+    /* background: rgba(255, 255, 255, 0.2); */
+    background:lightblue;
+    }
+
+.site-layout-sub-header-background {
+    background: #fff;
+    color: yellow
+}
+
+.site-layout-background {
+    background: #fff;
+}
+
+
+
+
+
+
+
