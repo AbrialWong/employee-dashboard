@@ -5,7 +5,8 @@ import {
   UserOutlined, 
   VideoCameraOutlined, 
   AntDesignOutlined,
-  EditOutlined 
+  EditOutlined,
+  RestOutlined
 } from '@ant-design/icons';
 import { 
   Layout, 
@@ -20,6 +21,16 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 
 const columns = [
+  {
+    title: '',
+    dataIndex: '',
+    key: '',
+    render: () => (
+      <span>
+        <AntDesignOutlined />
+      </span>
+    ),
+  },
   {
     title: 'Id',
     dataIndex: 'name',
@@ -46,9 +57,16 @@ const columns = [
   },
   {
     title: 'Action',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    dataIndex: '',
+    key: '',
+    render: () => (
+      <span>
+        <EditOutlined style={{
+                paddingRight: '30px',
+              }}  />
+        <RestOutlined  />
+      </span>
+    ),
   },
 ];
 const data = [
