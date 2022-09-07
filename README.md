@@ -27,8 +27,8 @@ This is the take home assignment for NPHC. This project will serve as a responsi
 
  <b>Technology used</b>
  
-TODO: add in technology used
- 
+React, React-Redux, Redux Toolkit
+
  > User Story 3: CRUD feature
  
  <b>Overview</b>
