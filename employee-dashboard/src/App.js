@@ -219,15 +219,21 @@ export const App = () => {
             />
           </div>
           {/* Dashboard */}
-      <div>
-      {/* header */}
-      <Title level={3} className="contentTitle">Employee</Title>
-      {/* Datatable */}
-      <Table columns={columns} 
-      dataSource={data} 
-      pagination={true}
-      />
-      </div>
+          <div>
+            {/* header */}
+            <Title 
+              level={3} 
+              className="contentTitle"
+            >
+              Employee
+            </Title>
+            {/* Datatable */}
+            <Table 
+              columns={columns} 
+              dataSource={data} 
+              pagination={{ pageSize: 5, total: 50, showSizeChanger: true }} 
+            />
+          </div>
 
           {/* <Header
             className="site-layout-sub-header-background"
