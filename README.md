@@ -20,14 +20,14 @@ This is the take home assignment for NPHC. This project will serve as a responsi
  User is able to :
  - view and employee details at one go
  - filter employee based on salary range
- - filter the list by id, employee name, login / salary in ascending or descending order
+ - sort the list by salary in ascending order
 
  Employee list table:
  - handle pagination (5,10,15 per page)
 
  <b>Technology used</b>
  
-React, React-Redux, Redux Toolkit, Ant Design, LESS, Axios
+React, React-Redux, Redux Toolkit, Ant Design, LESS, fetch
 
  > User Story 3: CRUD feature
  
@@ -35,11 +35,6 @@ React, React-Redux, Redux Toolkit, Ant Design, LESS, Axios
 
  User is able to:
  - modify name, login, salary by selecting an existing employee from the dashboard
-
- <b>Technology used</b>
- 
- TODO: add in technology used
-
 
 ## Run this project
 

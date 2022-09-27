@@ -52,36 +52,26 @@ const columns = [
     title: 'Name',
     dataIndex: 'employee_name',
     render: (name) => { 
-      return ( 
-        <> 
-          {name}
-        </> 
-      ); 
+      return name
     }, 
     responsive: ['md'],
   },
   {
     title: 'Login',
     dataIndex: 'employee_name',
-    render: (salary) => { 
-      let userName = salary.split(' ').join('_123') ;
-      return ( 
-      <> 
-        {userName}
-      </> 
-      ); 
+    render: (user) => { 
+      let userName = user.split(' ').join('_123') ;
+      return userName
     },     
     responsive: ['lg'],
   },
   {
     title: 'Salary',
     dataIndex: 'employee_salary',
+    sortDirections: ['ascend'],
+    sorter: (a, b) => a.employee_salary - b.employee_salary,
     render: (salary) => { 
-      return ( 
-      <> 
-      {salary}
-      </> 
-      ); 
+      return salary
     }, 
     responsive: ['lg'],
   },
@@ -92,8 +82,8 @@ const columns = [
     render: () => (
       <span>
         <EditOutlined style={{
-                paddingRight: '30px',
-              }}  />
+            paddingRight: '30px',
+          }}  />
         <RestOutlined  />
       </span>
     ),
