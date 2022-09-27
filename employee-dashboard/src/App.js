@@ -106,6 +106,8 @@ export const App = () => {
   const employeeList = useSelector(state=> state.dashboard.data)
 
   const [data, setData] = useState([]);
+  const [min, setMin] = useState();
+  const [max, setMax] = useState();
 
   useEffect(() => {
     fetchEmployeeList();
@@ -114,11 +116,16 @@ export const App = () => {
   useEffect(() => {
     if(!isEmpty(employeeList)){
       let empArr = Object.values(employeeList);
+      if(min && max){
+        empArr = empArr.filter(a=> a.employee_salary >= min && a.employee_salary <= max)
+      }else{
+        empArr = employeeList;
+      }
       setData(empArr)
     }else{
       setData([])
     }
-  }, [employeeList, setData]);
+  }, [employeeList, setData, min, max]);
 
   const fetchEmployeeList = async () => {
     const response = await fetch("http://dummy.restapiexample.com/api/v1/employees")
@@ -128,6 +135,7 @@ export const App = () => {
       return res.data
     });
   };
+
 
   return(
     <>
@@ -200,6 +208,9 @@ export const App = () => {
               style={{
                 width: '45%',
               }}
+              onChange={(event)=>{
+                setMin(event)
+              }}
             />
             - 
             {/* max amount */}
@@ -216,6 +227,9 @@ export const App = () => {
               style={{
                 width: '50%',
               }}
+              onChange={(event)=>{
+                setMax(event)
+              }}            
             />
           </div>
           {/* Dashboard */}
@@ -231,7 +245,7 @@ export const App = () => {
             <Table 
               columns={columns} 
               dataSource={data} 
-              pagination={{ pageSize: 5, total: 50, showSizeChanger: true }} 
+              pagination={{ pageSize: 5, total: 20, showSizeChanger: true }} 
             />
           </div>
 
