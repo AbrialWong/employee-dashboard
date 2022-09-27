@@ -1,5 +1,6 @@
+/* eslint-disable array-callback-return */
 import './App.css';
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { 
   UploadOutlined, 
   UserOutlined, 
@@ -16,8 +17,13 @@ import {
   InputNumber,
   Table
 } from 'antd';
+import { useDispatch, useSelector} from 'react-redux';
+import {
+  LOAD_EMPLOYEES
+} from "./actionTypes"
+import { isEmpty } from "lodash"
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 const { Title } = Typography;
 
 const columns = [
@@ -33,26 +39,50 @@ const columns = [
   },
   {
     title: 'Id',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    dataIndex: 'id',
+    render: (id) => { 
+      return ( 
+        <> 
+          {id}
+        </> 
+      ); 
+    },
   },
   {
     title: 'Name',
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'employee_name',
+    render: (name) => { 
+      return ( 
+        <> 
+          {name}
+        </> 
+      ); 
+    }, 
     responsive: ['md'],
   },
   {
     title: 'Login',
-    dataIndex: 'address',
-    key: 'address',
+    dataIndex: 'employee_name',
+    render: (salary) => { 
+      let userName = salary.split(' ').join('_123') ;
+      return ( 
+      <> 
+        {userName}
+      </> 
+      ); 
+    },     
     responsive: ['lg'],
   },
   {
     title: 'Salary',
-    dataIndex: 'address',
-    key: 'address',
+    dataIndex: 'employee_salary',
+    render: (salary) => { 
+      return ( 
+      <> 
+      {salary}
+      </> 
+      ); 
+    }, 
     responsive: ['lg'],
   },
   {
@@ -69,16 +99,36 @@ const columns = [
     ),
   },
 ];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-];
+
 
 export const App = () => {
+  const dispatch = useDispatch();
+  const employeeList = useSelector(state=> state.dashboard.data)
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchEmployeeList();
+  }, []);
+
+  useEffect(() => {
+    if(!isEmpty(employeeList)){
+      let empArr = Object.values(employeeList);
+      setData(empArr)
+    }else{
+      setData([])
+    }
+  }, [employeeList, setData]);
+
+  const fetchEmployeeList = async () => {
+    const response = await fetch("http://dummy.restapiexample.com/api/v1/employees")
+    .then((response) => response.json())
+    .then((res) => {
+      dispatch({ type: LOAD_EMPLOYEES, payload: res.data });
+      return res.data
+    });
+  };
+
   return(
     <>
     <div className="root">
@@ -89,10 +139,10 @@ export const App = () => {
           breakpoint="lg"
           collapsedWidth="0"
           onBreakpoint={(broken) => {
-            console.log(broken);
+            // console.log(broken);
           }}
           onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
+            // console.log(collapsed, type);
           }}
         >
         {/* Image & text */}
@@ -173,7 +223,10 @@ export const App = () => {
       {/* header */}
       <Title level={3} className="contentTitle">Employee</Title>
       {/* Datatable */}
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} 
+      dataSource={data} 
+      pagination={true}
+      />
       </div>
 
           {/* <Header
