@@ -1,8 +1,10 @@
 import {
-    LOAD_EMPLOYEES
+    LOAD_EMPLOYEES,
+    SELECT_EMPLOYEE
 } from "../actionTypes"
 const initialState = {
-data:[]
+    data:[],
+    selected:{}
 };
 
 export const dashboardReducer = (state = initialState, action) =>{
@@ -12,6 +14,11 @@ export const dashboardReducer = (state = initialState, action) =>{
             ...state,
             data: action.payload
         }
+        case SELECT_EMPLOYEE:
+            return {
+                ...state,
+                selected: action.payload
+            }
         default:
             return state
     }

@@ -57,6 +57,13 @@
 .ant-layout{
     background:white;
 }
+.ant-input-prefix, .ant-input-suffix {
+    padding-left:10px
+}
+.ant-input-prefix {
+    margin-right: 4px;
+    width: 100%;
+}
 #components-layout-demo-responsive {
     height: 32px;
     margin: 16px;
