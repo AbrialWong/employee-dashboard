@@ -1,5 +1,4 @@
 /* eslint-disable array-callback-return */
-// import './App.css';
 import './css/styles.css';
 import React,{useEffect, useState} from 'react';
 import { 
