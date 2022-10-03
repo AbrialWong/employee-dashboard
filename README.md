@@ -1,40 +1,21 @@
 
 ## Objectives
 
-This is the take home assignment for NPHC. This project will serve as a responsive web app. This project will consist of 3 user stories as follows:
+Created a simple employee dashboard.
 
- > User Story 1: Upload User 
-
- <b>Overview</b>
-
- User is able to upload a CSV file to the system.
-
- <b>Technology used</b>
-
- TODO: add in technology used
- 
- > User Story 2: Employee Dashboard Feature
-
- <b>Overview</b>
+<b>Overview</b>
 
  User is able to :
  - view and employee details at one go
  - filter employee based on salary range
  - sort the list by salary in ascending order
-
- Employee list table:
+ - select a particular record, row will be highlighted in grey and a dialog box will render and display the details of the employee
+ - user can delete record and a notification message will be shown at the side
  - handle pagination (5,10,15 per page)
 
  <b>Technology used</b>
  
-React, React-Redux, Redux Toolkit, Ant Design, LESS, fetch
-
- > User Story 3: CRUD feature
- 
- <b>Overview</b>
-
- User is able to:
- - modify name, login, salary by selecting an existing employee from the dashboard
+React, React-Redux, Redux Toolkit, Ant Design, LESS, Dummy rest api example, fetch
 
 ## Run this project
 
@@ -45,11 +26,41 @@ React, React-Redux, Redux Toolkit, Ant Design, LESS, fetch
 `npm install or npm i`
 
 <b> Step 3: Run the project </b><br>
-  `npm start`
+> a. Open a terminal and run `npm start`.
+
+> b. Open a new terminal and run `ess-watch-compiler src/less src/css`, to compile the less file into css file at runtime
 
 ## Output
 
- TODO: add in output
+---
+### Delete record
+---
+
+<img src="employee-dashboard/src/asserts/delete.png">
+
+---
+### Landing page
+---
+
+<img src="employee-dashboard/src/asserts/landing-page.png">
+
+---
+### Filter Table by salary in ascending order
+---
+
+<img src="employee-dashboard/src/asserts/sort-asc.png">
+
+---
+### Sort by min and max salary
+---
+
+<img src="employee-dashboard/src/asserts/min-max.png">
+
+---
+### Select particular record
+---
+
+<img src="employee-dashboard/src/asserts/select-record.png">
 
 ## Authors
 

@@ -7,7 +7,8 @@ import {
   VideoCameraOutlined, 
   AntDesignOutlined,
   EditOutlined,
-  RestOutlined
+  RestOutlined,
+  CloseOutlined
 } from '@ant-design/icons';
 import { 
   Layout, 
@@ -18,93 +19,38 @@ import {
   Table,
   Modal,
   Button,
-  Input
+  Input,
+  Divider,
+  Form,
+  notification
 } from 'antd';
 import { useDispatch, useSelector} from 'react-redux';
 import {
   LOAD_EMPLOYEES,
-  SELECT_EMPLOYEE
+  SELECT_EMPLOYEE,
+  DELETE_EMPLOYEE,
 } from "./actionTypes"
 import { isEmpty } from "lodash"
 
 const { Sider } = Layout;
 const { Title } = Typography;
 
-const columns = [
-  {
-    title: '',
-    dataIndex: '',
-    key: '',
-    render: () => (
-      <span>
-        <AntDesignOutlined />
-      </span>
-    ),
-  },
-  {
-    title: 'Id',
-    dataIndex: 'id',
-    render: (id) => { 
-      return ( 
-        <> 
-          {id}
-        </> 
-      ); 
-    },
-  },
-  {
-    title: 'Name',
-    dataIndex: 'full_name',
-    render: (name) => { 
-      return name
-    }, 
-    responsive: ['md'],
-  },
-  {
-    title: 'Login',
-    dataIndex: 'login_id',
-    render: (user) => { 
-      // let userName = user + '_123';
-      return user
-    },     
-    responsive: ['lg'],
-  },
-  {
-    title: 'Salary',
-    dataIndex: 'salary',
-    sortDirections: ['ascend'],
-    sorter: (a, b) => a.salary - b.salary,
-    render: (salary) => { 
-      return salary
-    }, 
-    responsive: ['lg'],
-  },
-  {
-    title: 'Action',
-    dataIndex: '',
-    key: '',
-    render: () => (
-      <span>
-        <EditOutlined style={{
-            paddingRight: '30px',
-          }}  />
-        <RestOutlined  />
-      </span>
-    ),
-  },
-];
+
 
 
 export const App = () => {
   const dispatch = useDispatch();
   const employeeList = useSelector(state=> state.dashboard.data)
   const selected = useSelector(state=> state.dashboard.selected)
+  const deleted = useSelector(state=>state.dashboard.deleted)
 
   const [data, setData] = useState([]);
   const [min, setMin] = useState();
   const [max, setMax] = useState();
   const [open, setOpen] = useState(false);
+  const [rowColor, setRowColor] = useState(null);
 
+  console.log("deleted exist", deleted)
 
   useEffect(() => {
     fetchEmployeeList();
@@ -113,36 +59,42 @@ export const App = () => {
   useEffect(() => {
     if(!isEmpty(employeeList)){
       let empArr = Object.values(employeeList);
-      if(min && max){
+      if((min && max) || deleted){
+        if(min && max){
         empArr = empArr.filter(a=> a.salary >= min && a.salary <= max)
-      } else {
+        }
+        if(deleted && deleted.status === "success"){
+          // print out notification message
+          const args = {
+            description: deleted.message,
+            duration: 3,
+          };
+          notification.success(args);
+
+        // populate remaining records
+         empArr = empArr.filter(b=> b.id != deleted.data) 
+        }
+      } 
+      else {
         empArr = employeeList;
       }
       setData(empArr)
     }else{
       setData([])
     }
-  }, [employeeList, setData, min, max]);
+  }, [employeeList, setData, min, max, deleted]);
 
   const fetchEmployeeList = async () => {
-    const response = await fetch("https://nphc-hr.free.beeceptor.com/employees")
-    .then((response) => response.json())
-    .then((res) => {
-      console.log("dash-2", res);
 
-      dispatch({ type: LOAD_EMPLOYEES, payload: res });
-      return res
-    });
-  };
-
-  const handleOk = () => {
-    // setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setOpen(false);
-    // }, 3000);
-    setOpen(false);
-
+    // hardcode data
+    const response = [
+      {"id":1,"full_name":"Tiger Nixon","salary":320800,"login_id":"Tiger_Nixon","profile_image":""},
+      {"id":2,"full_name":"Garrett Winters","salary":170750,"login_id":"Garrett_Winters","profile_image":""},
+      {"id":3,"full_name":"Ashton Cox","salary":86000,"login_id":"Ashton_Cox","profile_image":""},
+      {"id":4,"full_name":"Cedric Kelly","salary":433060,"login_id":"Cedric_Kelly","profile_image":""},
+      {"id":5,"full_name":"Airi Satou","salary":162700,"login_id":"Airi_Satou","profile_image":""}
+    ]
+    dispatch({ type: LOAD_EMPLOYEES, payload: response });     
   };
 
   const handleCancel = () => {
@@ -150,90 +102,115 @@ export const App = () => {
   };
 
 
-  console.log("dash-1", selected);
-
+  const columns = [
+    {
+      title: '',
+      dataIndex: '',
+      key: '',
+      render: () => (
+        <span>
+          <AntDesignOutlined />
+        </span>
+      ),
+    },
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      render: (id) => { 
+        return ( 
+          <> 
+            {id}
+          </> 
+        ); 
+      },
+    },
+    {
+      title: 'Name',
+      dataIndex: 'full_name',
+      render: (name) => { 
+        return name
+      }, 
+      responsive: ['md'],
+    },
+    {
+      title: 'Login',
+      dataIndex: 'login_id',
+      render: (user) => { 
+        return user
+      },     
+      responsive: ['lg'],
+    },
+    {
+      title: 'Salary',
+      dataIndex: 'salary',
+      sortDirections: ['ascend'],
+      sorter: (a, b) => a.salary - b.salary,
+      render: (salary) => { 
+        return salary
+      }, 
+      responsive: ['lg'],
+    },
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: '',
+      render: (record) => (
+        <span>
+          <RestOutlined  
+            onClick={async (e)=>{
+              e.stopPropagation()              
+              const deleteRec = await fetch('https://dummy.restapiexample.com/api/v1/delete/' + record.id, {
+                method: 'DELETE',
+              })
+              .then(res => res.json())
+              .then(res => {
+                dispatch({ type: DELETE_EMPLOYEE, payload: res });
+                return res
+              })
+            }}
+          />
+        </span>
+      ),
+    },
+  ];
   return(
     <>
     <div className="root">
       <Modal
-          header={[
-            <Button key="submit" type="primary" 
-            // loading={loading} 
-            onClick={handleOk}>
-              test
-            </Button>,
-          ]}
+          header={null}
           open={open}
-          title="Edit"
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={ null
-            //[
-          //   <Button key="submit" type="primary" 
-          //   // loading={loading} 
-          //   onClick={handleOk}>
-          //     Save
-          //   </Button>,
-          // ]
-          }
+          footer={ null}
+          width={1000}
+          closable={null}
         >
+        {/* header */}
+        <div className="modalDiv">
+        <CloseOutlined onClick={handleCancel} />
+        <Title level={5} className="modalTitle">Details of Record</Title>
+        </div>
+        <Divider/>
+
+        {/* content */}
+        <div className="modalContent">
           <Title level={3}>Employee Id {selected.id}</Title>
-          {/* Name input */}
-          <div 
-            style={{
-              width: '100%',
+          <Form
+            name="basic"
+            initialValues={{
+              remember: true,
             }}
+            autoComplete="off"
           >
-            <Input
-                prefix={
-                  <>
-                    <div>
-                      <div style={{color:"lightgrey", fontWeight:"smaller"}}>Name</div>
-                      <Title level={4}>{selected.full_name}</Title>
-                    </div>                
-                  </>
-                }
-            />
-          </div>
-          {/* login input */}
-          <div 
-              style={{
-                width: '100%',
-              }}
-          >
-            <Input
-              prefix={
-                <>
-                  <div>
-                      <div style={{color:"lightgrey",fontWeight:"smaller"}}>Login</div>
-                      <Title level={4}>{selected.login_id}</Title>
-                    </div>                
-                  </>
-              }
-            />
-          </div>
-          {/* Salary Input */}
-          <div 
-              style={{
-                width: '100%',
-                backgroundColor:"lightgreen"
-              }}
-          >
-            <Input
-              prefix={
-                <>
-                  <div>
-                    <div style={{color:"lightgrey", fontWeight:"smaller"}}>Salary</div>
-                    <Title level={4}>{'S$'}{selected.salary}</Title>
-                  </div>                
-                </>
-              }
-            />
-          </div>
-          <Button key="submit" type="primary"  style={{ width: '100%',}}
-              onClick={handleOk}>
-              Save
-          </Button>,
+            <Form.Item label="Name">
+             {selected.full_name}
+            </Form.Item>
+            <Form.Item label="Login ID">
+              {selected.login_id}
+            </Form.Item>
+            <Form.Item label="Salary">
+              {selected.salary}
+            </Form.Item>
+          </Form>
+        </div>
       </Modal>
       <div className="slider">
         <Layout>
@@ -270,11 +247,12 @@ export const App = () => {
           <Menu
             mode="inline"
             defaultSelectedKeys={['4']}
-            items={[UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
+            items={[UserOutlined].map(
               (icon, index) => ({
                 key: String(index + 1),
                 icon: React.createElement(icon),
-                label: `Function ${index + 1}`,
+                label: "Dashboard",
+
               }),
               
             )}
@@ -341,51 +319,21 @@ export const App = () => {
               columns={columns} 
               dataSource={data} 
               pagination={{ pageSize: 5, total: 20, showSizeChanger: true }} 
+              rowClassName={(record) => record.id === selected.id ? 'table-row-light': 'table-row-none'}
               onRow={(record, rowIndex) => {
-                console.log("rowData-1", record)
                   return {
                     onClick: () => {
-                      console.log("rowData-1.1", record)
                       dispatch({ type: SELECT_EMPLOYEE, payload: record });
-                      setOpen(true)
+                      setOpen(true);
                     }
                   }
     
               }}
             />
           </div>
-
-          {/* <Header
-            className="site-layout-sub-header-background"
-            style={{
-              padding: 0,
-            }}
-          /> */}
-          {/* <Content
-            style={{
-              margin: '24px 16px 0',
-            }}
-          >
-            <div
-              className="site-layout-background"
-              style={{
-                padding: 24,
-                minHeight: 360,
-              }}
-            >
-              content
-            </div>
-          </Content>
-          <Footer
-            style={{
-              textAlign: 'center',
-            }}
-          >
-            Ant Design ©2018 Created by Ant UED
-          </Footer> */}
         </Layout>
       </div>
-</div>
+    </div>
     </>
   )
 }

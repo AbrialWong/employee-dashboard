@@ -1,10 +1,13 @@
 import {
     LOAD_EMPLOYEES,
-    SELECT_EMPLOYEE
+    SELECT_EMPLOYEE,
+    DELETE_EMPLOYEE
 } from "../actionTypes"
 const initialState = {
     data:[],
-    selected:{}
+    selected:{},
+    deleted:{}
+
 };
 
 export const dashboardReducer = (state = initialState, action) =>{
@@ -19,6 +22,12 @@ export const dashboardReducer = (state = initialState, action) =>{
                 ...state,
                 selected: action.payload
             }
+            case DELETE_EMPLOYEE:
+                return {
+                    ...state,
+                    deleted: action.payload
+                }
+
         default:
             return state
     }
