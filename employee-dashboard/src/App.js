@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
-import './App.css';
+// import './App.css';
+import './css/styles.css';
 import React,{useEffect, useState} from 'react';
 import { 
   UploadOutlined, 
@@ -155,85 +156,85 @@ export const App = () => {
   return(
     <>
     <div className="root">
-    <Modal
-        header={[
-          <Button key="submit" type="primary" 
-          // loading={loading} 
-          onClick={handleOk}>
-            test
-          </Button>,
-        ]}
-        open={open}
-        title="Edit"
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={ null
-          //[
-        //   <Button key="submit" type="primary" 
-        //   // loading={loading} 
-        //   onClick={handleOk}>
-        //     Save
-        //   </Button>,
-        // ]
-        }
-      >
-        <Title level={3}>Employee Id {selected.id}</Title>
-        {/* Name input */}
-        <div 
-          style={{
-            width: '100%',
-          }}
+      <Modal
+          header={[
+            <Button key="submit" type="primary" 
+            // loading={loading} 
+            onClick={handleOk}>
+              test
+            </Button>,
+          ]}
+          open={open}
+          title="Edit"
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={ null
+            //[
+          //   <Button key="submit" type="primary" 
+          //   // loading={loading} 
+          //   onClick={handleOk}>
+          //     Save
+          //   </Button>,
+          // ]
+          }
         >
-          <Input
+          <Title level={3}>Employee Id {selected.id}</Title>
+          {/* Name input */}
+          <div 
+            style={{
+              width: '100%',
+            }}
+          >
+            <Input
+                prefix={
+                  <>
+                    <div>
+                      <div style={{color:"lightgrey", fontWeight:"smaller"}}>Name</div>
+                      <Title level={4}>{selected.full_name}</Title>
+                    </div>                
+                  </>
+                }
+            />
+          </div>
+          {/* login input */}
+          <div 
+              style={{
+                width: '100%',
+              }}
+          >
+            <Input
               prefix={
                 <>
                   <div>
-                    <div style={{color:"lightgrey", fontWeight:"smaller"}}>Name</div>
-                    <Title level={4}>{selected.full_name}</Title>
+                      <div style={{color:"lightgrey",fontWeight:"smaller"}}>Login</div>
+                      <Title level={4}>{selected.login_id}</Title>
+                    </div>                
+                  </>
+              }
+            />
+          </div>
+          {/* Salary Input */}
+          <div 
+              style={{
+                width: '100%',
+                backgroundColor:"lightgreen"
+              }}
+          >
+            <Input
+              prefix={
+                <>
+                  <div>
+                    <div style={{color:"lightgrey", fontWeight:"smaller"}}>Salary</div>
+                    <Title level={4}>{'S$'}{selected.salary}</Title>
                   </div>                
                 </>
               }
-          />
-        </div>
-        {/* login input */}
-        <div 
-            style={{
-              width: '100%',
-            }}
-        >
-          <Input
-            prefix={
-              <>
-                <div>
-                    <div style={{color:"lightgrey",fontWeight:"smaller"}}>Login</div>
-                    <Title level={4}>{selected.login_id}</Title>
-                  </div>                
-                </>
-            }
-          />
-        </div>
-        {/* Salary Input */}
-        <div 
-            style={{
-              width: '100%',
-              backgroundColor:"lightgreen"
-            }}
-        >
-          <Input
-            prefix={
-              <>
-                <div>
-                  <div style={{color:"lightgrey", fontWeight:"smaller"}}>Salary</div>
-                  <Title level={4}>{'S$'}{selected.salary}</Title>
-                </div>                
-              </>
-            }
-          />
-        </div>
-        <Button key="submit" type="primary"  style={{ width: '100%',}}
-            onClick={handleOk}>
-            Save
-        </Button>,
+            />
+          </div>
+          <Button key="submit" type="primary"  style={{ width: '100%',}}
+              onClick={handleOk}>
+              Save
+          </Button>,
       </Modal>
       <div className="slider">
         <Layout>
